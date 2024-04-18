@@ -23,7 +23,7 @@ def tuning_model(X, y, smelltype, algo: list):
 
     os.makedirs('tuning_model', exist_ok=True)
     os.makedirs(f'tuning_model\\{smelltype}', exist_ok=True)
-    os.makedirs('tuning_model\\'+smelltype+'_data\\data', exist_ok=True)
+    os.makedirs('tuning_model\\'+smelltype+'_data', exist_ok=True)
     os.makedirs('tuning_model\\'+smelltype + '\\' +'tuning', exist_ok=True)
     os.makedirs('tuning_model\\'+smelltype + '\\' +'tuning report', exist_ok=True)
 
@@ -47,9 +47,10 @@ def tuning_model(X, y, smelltype, algo: list):
             y_train = y[train_index] 
             X_test = X[test_index]
             y_test = y[test_index]
-
-            if not os.path.exists(smelltype+ '_data\\' +'data'):
+            
+            if not os.path.exists('tuning_model\\' + smelltype+ '_data\\' +'train_fold_' + str(fold) + '.csv'):
                 # start save train test to csv file
+                print(f"-----------------Fold: {fold} Save {smelltype} data-----------------")
                 x_train_data =  pd.DataFrame(X_train)
                 y_train_data =  pd.DataFrame(y_train)
                 x_test_data = pd.DataFrame(X_test)
@@ -61,7 +62,6 @@ def tuning_model(X, y, smelltype, algo: list):
                 # end
             
             # ***** start model predict *****
-
             y_pred = ModelPredict(a, fold, X_train, y_train, X_test, y_test, report_fold_all)
 
             predicted_targets = np.append(predicted_targets, y_pred)

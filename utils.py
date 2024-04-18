@@ -103,7 +103,7 @@ def get_params_dict(algo, smelltype):
             if len(data) > i:
                 result_dict[i][al_name] = data[i]['best_params']
             else:
-                raise f"{file_path} error"
+                print(f"{file_path} error")
     return result_dict
 
 # 检查当前algo中是否已经进行过网格搜索，只保留没进行过网格搜索的模型

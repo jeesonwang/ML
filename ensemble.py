@@ -34,7 +34,7 @@ class StackingEnsemble:
 
         return pred_test, final_acc, final_f1
     
-    def set_params(self, params: None):
+    def set_params(self, params: dict=None):
         if params is not None:
             for a in self.algo:
                 cur_params = params[a[1]]
@@ -68,7 +68,7 @@ class VoteEnsemble:
         else:
             estimators = []
             for a in self.algo:
-                cur_params = params[a[1]]
+                classifier = a[0]
                 estimators.append((a[1], classifier))
             self.voting_classifier = VotingClassifier(estimators=estimators, voting=self.vote_mode)
         
