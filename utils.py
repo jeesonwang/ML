@@ -118,3 +118,17 @@ def filter_algo(algo, tuned_path = "tuning_model/LongMethod/tuning"):
     return algo
 
 
+def data_processing(data_path: str, label_colum: str='smell'):
+    data = pd.read_csv(data_path, encoding='UTF8')
+
+    data_label = data[label_colum]
+    data = data.drop(label_colum, axis=1)
+    # 删除全为 0 的列
+    data = data.loc[:, (data != 0).any(axis=0)]
+    # Nan值填充为-1
+    data = data.fillna(-1)
+    # 标准化
+    mean = data.mean()
+    std = data.std()
+    data = (data - mean)/std
+    return data.to_numpy(), data_label.to_numpy()
